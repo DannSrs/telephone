@@ -16,8 +16,23 @@ public class Screen {
                 System.out.println(newDigit);
             }
         };
-        
-        // Cadastra o observador no modelo
         this.model.addObserver(observadorDigito);
+
+        // Cria o segundo observador: imprime "Agora discando..." ao final
+        Observer observadorDiscagem = new Observer() {
+            @Override
+            public void update(int newDigit) {
+                // Checa se o número de telefone já atingiu 12 dígitos
+                if (model.getDigits().size() == 12) {
+                    System.out.print("Agora discando ");
+                    // Varre a lista de dígitos para imprimir tudo na mesma linha
+                    for (int digito : model.getDigits()) {
+                        System.out.print(digito);
+                    }
+                    System.out.println("...");
+                }
+            }
+        };
+        this.model.addObserver(observadorDiscagem);
     }
 }
